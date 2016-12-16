@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="decartSquareApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Decart Square</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+  <script>
+    var decartSquareApp = angular.module('decartSquareApp', []);
+
+    decartSquareApp.controller('DecartSquareCtrl', function DecartSquareCtrl($scope) {
+      $scope.values1 = [];
+      $scope.values2 = [];
+      $scope.values3 = [];
+      $scope.values4 = [];
+
+      $scope.addValue = function (field) {
+        $scope['values' + field].push({'title': $scope['newValue' + field]});
+        $scope['newValue' + field] = '';
+      };
+
+      $scope.removeValue = function (key, field) {
+        $scope['values' + field].splice(key, 1);
+      };
+
+    });
+  </script>
+  <style>
+    b {
+      color: red;
+    }
+    ul {
+      margin: 0;
+    }
+    li {
+      list-style: decimal;
+      margin: 1rem 0;
+      font-size: 20px;
+      border-bottom: 2px solid gray;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    li::first-letter {
+      text-transform: uppercase;
+    }
+    .result {
+      margin: 1rem 0;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body ng-controller="DecartSquareCtrl">
+  <div class="container">
+    <h1>Квадрат Декарта для принятия решений</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Что будет, если это произойдёт?</h2>
+
+        <ul>
+          <li ng-repeat="value in values1">
+            <span>{{value.title}}</span>
+            <button class="close" ng-click="removeValue(value.title, '1')"><span aria-hidden="true">&times;</span></button>
+          </li>
+        </ul>
+        <form name="newValueFrm1" ng-submit="addValue('1')">
+          <div class="row">
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="newValue1" ng-model="newValue1" autocomplete="off" required />
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-default btn-block" ng-disabled="newValueFrm1.$invalid">Добавить</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="col-md-6">
+        <h2>Что будет, если это <b>не</b> произойдёт?</h2>
+
+        <ul>
+          <li ng-repeat="(key, value) in values3">
+            <span>{{value.title}}</span>
+            <button class="close" ng-click="removeValue(key, '3')"><span aria-hidden="true">&times;</span></button>
+          </li>
+        </ul>
+        <form name="newValueFrm3" ng-submit="addValue('3')">
+          <div class="row">
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="newValue3" ng-model="newValue3" autocomplete="off" required />
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-default btn-block" ng-disabled="newValueFrm3.$invalid">Добавить</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Чего <b>не</b> будет, если это произойдёт?</h2>
+
+        <ul>
+          <li ng-repeat="value in values2">
+            <span>{{value.title}}</span>
+            <button class="close" ng-click="removeValue(value.title, '2')"><span aria-hidden="true">&times;</span></button>
+          </li>
+        </ul>
+        <form name="newValueFrm2" ng-submit="addValue('2')">
+          <div class="row">
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="newValue2" ng-model="newValue2" autocomplete="off" required />
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-default btn-block" ng-disabled="newValueFrm2.$invalid">Добавить</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- <p class="result">Итого: {{values1.length + values2.length}}</p> -->
+
+      </div>
+      <div class="col-md-6">
+        <h2>Чего <b>не</b> будет, если это <b>не</b> произойдёт?</h2>
+
+        <ul>
+          <li ng-repeat="(key, value) in values4">
+            <span>{{value.title}}</span>
+            <button class="close" ng-click="removeValue(key, '4')"><span aria-hidden="true">&times;</span></button>
+          </li>
+        </ul>
+        <form name="newValueFrm4" ng-submit="addValue('4')">
+          <div class="row">
+            <div class="col-md-9">
+              <input type="text" class="form-control" name="newValue4" ng-model="newValue4" autocomplete="off" required />
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-default btn-block" ng-disabled="newValueFrm4.$invalid">Добавить</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- <p class="result">Итого: {{values3.length + values4.length}}</p> -->
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
